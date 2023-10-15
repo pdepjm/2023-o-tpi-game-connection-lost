@@ -1,8 +1,27 @@
 import wollok.game.*
-import pepita.*
+import personaje.*
+import enemigos.*
 
 program juego {
+	game.cellSize(10)
+	game.width(150)
+	game.height(100)
+	game.boardGround("fondo.png")
 	game.title("Juego Base")
-	game.addVisual(pepita)
+	game.addVisualCharacter(personaje)
+	game.addVisual(enemigo1)
+	keyboard.left().onPressDo({personaje.cambiarDireccion("left")})
+	keyboard.right().onPressDo({personaje.cambiarDireccion("right")})
+	keyboard.up().onPressDo({personaje.cambiarDireccion("up")})
+	keyboard.down().onPressDo({personaje.cambiarDireccion("down")})
+	keyboard.z().onPressDo({personaje.disparar()})
+	
+    
+	
+	
+	
+	
+	
 	game.start()
+	
 }
