@@ -32,6 +32,7 @@ class Proyectil {
 		else position = position.down(1)
 		if(position.x() < 0 || position.x() > 150|| position.y() < 0|| position.y() > 100){
 			game.removeVisual(self)
+			game.removeTickEvent("mover")
 		}
 	}
 	
