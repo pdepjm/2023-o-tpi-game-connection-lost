@@ -18,7 +18,7 @@ object personaje {
 
 
 }
-object Proyectil {
+class Proyectil {
 	var property position = personaje.position()
 	const direccion = personaje.direccion()
 	method image() = "bala.png"
