@@ -4,8 +4,8 @@ import enemigos.*
 
 program juego {
 	game.cellSize(10)
-	game.width(150)
-	game.height(100)
+	game.width(100)
+	game.height(50)
 	game.boardGround("fondo.png")
 	game.title("Juego Base")
 	game.addVisualCharacter(personaje)
