@@ -2,7 +2,6 @@ import wollok.game.*
 import enemigos.*
 
 object personaje {
-
 	var property position = game.center()
 	var property direccion = "right"
 	method cambiarDireccion(direccionNueva){

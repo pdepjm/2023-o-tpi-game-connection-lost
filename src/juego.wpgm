@@ -16,9 +16,10 @@ program juego {
 	keyboard.down().onPressDo({personaje.cambiarDireccion("down")})
 	keyboard.z().onPressDo({personaje.disparar()})
 	
-    
+	game.onTick(enemigo1.cooldown ,"Acercarse", {enemigo1.acercarse(personaje)})   
 	
-	
+    //keyboard.x().onPressDo({enemigo1.acercarse(personaje)})
+	//keyboard.c().onPressDo({game.say(enemigo1, personaje.position().x())})
 	
 	
 	
