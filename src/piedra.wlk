@@ -1,6 +1,11 @@
 import wollok.game.*
 import personaje.*
 
+
+class Arena{
+	method image() = "arena.png"
+}
+
 object piedra{
 	var property velocidad = 1
 	var property position = game.at(15,15)
@@ -18,4 +23,5 @@ object piedra{
 			game.removeTickEvent("caer")
 		}
 	}
+	method tocarEnemigo(){}
 }

@@ -2,6 +2,7 @@ import wollok.game.*
 import personaje.*
 import enemigos.*
 import piedra.*
+import graficos.*
 
 program juego {
 	var altura = 50
@@ -16,6 +17,7 @@ program juego {
 	game.addVisualCharacter(personaje)
 	game.addVisual(enemigo1)
 	game.addVisual(piedra)
+	game.addVisual(vida)
 	
 	keyboard.left().onPressDo({personaje.cambiarDireccion("left")})
 	keyboard.right().onPressDo({personaje.cambiarDireccion("right")})
@@ -23,7 +25,9 @@ program juego {
 	keyboard.down().onPressDo({personaje.cambiarDireccion("down")})
 	keyboard.z().onPressDo({personaje.disparar()})
 	
-	game.onTick(enemigo1.cooldown ,"Acercarse", {enemigo1.acercarse(personaje)})   
+	game.onTick(enemigo1.cooldown() ,"Acercarse", {enemigo1.acercarse(personaje)})   
+	
+	game.onCollideDo(enemigo1, {objeto => objeto.tocarEnemigo()})
 	
 	game.start()
 }

@@ -3,8 +3,13 @@ import enemigos.*
 
 object personaje {
 	var property position = game.at(20,20)
+	const posicionInicial = position
 	var property direccion = "right"
+	var property vida = 3
 	
+	method cambiarPosition(nueva){
+		position = nueva
+	}
 	method cambiarDireccion(direccionNueva){
 		direccion = direccionNueva
 	}
@@ -13,15 +18,21 @@ object personaje {
 	method disparar(){
 			const tiro = new Proyectil()
 			game.addVisual(tiro)
-        	game.onTick(10,"mover", {tiro.mover()}) 
-        	
+        	game.onTick(10,"mover", {tiro.mover()})      	
         	game.whenCollideDo(tiro, {
 			elemento =>
 			elemento.tocarTiro()
 			}) 
+			
 	}
-
+	
+	
 	method tocarTiro() {}
+	method tocarEnemigo(){
+		position = posicionInicial
+		vida -= 1
+		if (vida == 0) game.clear()
+	}
 
 }
 class Proyectil {
@@ -44,13 +55,16 @@ class Proyectil {
 		}
 		
 		if(position.x() < 0 || position.x() > 150|| position.y() < 0|| position.y() > 100){
-			game.removeVisual(self)
-			game.removeTickEvent("mover")
-		} else {}
+			self.eliminarTiro()
+		}
+		
 	}
 	
 	
-	method tocarTiro() {}
+	method eliminarTiro() {
+		game.removeVisual(self)
+		game.removeTickEvent("mover")
+	}
 	
 }
 
