@@ -21,6 +21,10 @@ object enemigo1{
 			position = position.down(velocidad)
 		}
 	}
+	
+	method tocarTiro() {
+		game.removeVisual(self)
+	}
 }
 class Enemigo2{
 	

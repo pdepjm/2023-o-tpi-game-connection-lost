@@ -1,15 +1,22 @@
 import wollok.game.*
 import personaje.*
 import enemigos.*
+import piedra.*
 
 program juego {
+	var altura = 50
+	var anchura = 100
+	
 	game.cellSize(10)
-	game.width(100)
-	game.height(50)
+	game.width(anchura)
+	game.height(altura)
 	game.boardGround("fondo.png")
 	game.title("Juego Base")
+	
 	game.addVisualCharacter(personaje)
 	game.addVisual(enemigo1)
+	game.addVisual(piedra)
+	
 	keyboard.left().onPressDo({personaje.cambiarDireccion("left")})
 	keyboard.right().onPressDo({personaje.cambiarDireccion("right")})
 	keyboard.up().onPressDo({personaje.cambiarDireccion("up")})
@@ -18,11 +25,5 @@ program juego {
 	
 	game.onTick(enemigo1.cooldown ,"Acercarse", {enemigo1.acercarse(personaje)})   
 	
-    //keyboard.x().onPressDo({enemigo1.acercarse(personaje)})
-	//keyboard.c().onPressDo({game.say(enemigo1, personaje.position().x())})
-	
-	
-	
 	game.start()
-	
 }
