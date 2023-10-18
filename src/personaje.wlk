@@ -20,15 +20,12 @@ object personaje {
 			const tiro = new Proyectil()
 			game.addVisual(tiro)
         	game.onTick(10,"mover", {tiro.mover()})      	
-        	game.whenCollideDo(tiro, {
-			elemento =>
-			if (elemento!= self){
-			elemento.tocarTiro()
-			tiro.eliminarTiro()	
-			}
-			
-			}) 
-			
+        	game.whenCollideDo(tiro, { elemento =>
+				if (elemento!= self){
+					elemento.tocarTiro()
+					tiro.eliminarTiro()	
+				}		
+			}) 	
 	}
 	
 	

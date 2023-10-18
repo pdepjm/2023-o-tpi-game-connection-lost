@@ -18,6 +18,7 @@ program juego {
 	game.addVisual(enemigo1)
 	game.addVisual(piedra)
 	game.addVisual(vida)
+	game.addVisual(enemigo2)
 	
 	keyboard.left().onPressDo({personaje.cambiarDireccion("left")})
 	keyboard.right().onPressDo({personaje.cambiarDireccion("right")})
@@ -25,7 +26,8 @@ program juego {
 	keyboard.down().onPressDo({personaje.cambiarDireccion("down")})
 	keyboard.z().onPressDo({personaje.disparar()})
 	
-	game.onTick(enemigo1.cooldown() ,"Acercarse", {enemigo1.acercarse(personaje)})   
+	game.onTick(enemigo1.cooldown() ,"Acercarse1", {enemigo1.acercarse(personaje)})  
+	game.onTick(enemigo2.cooldown() ,"Acercarse2", {enemigo2.acercarse(personaje)}) 
 	
 	game.onCollideDo(enemigo1, {objeto => objeto.tocarEnemigo()})
 	
