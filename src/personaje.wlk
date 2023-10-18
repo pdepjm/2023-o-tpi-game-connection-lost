@@ -22,7 +22,11 @@ object personaje {
         	game.onTick(10,"mover", {tiro.mover()})      	
         	game.whenCollideDo(tiro, {
 			elemento =>
+			if (elemento!= self){
 			elemento.tocarTiro()
+			tiro.eliminarTiro()	
+			}
+			
 			}) 
 			
 	}
