@@ -24,4 +24,5 @@ object piedra{
 		}
 	}
 	method tocarEnemigo(){}
+	method tocarFuego(){}
 }

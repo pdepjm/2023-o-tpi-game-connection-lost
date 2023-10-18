@@ -30,6 +30,11 @@ object personaje {
 	
 	
 	method tocarTiro() {}
+	method tocarFuego(){
+		position = posicionInicial
+		vida -= 1
+		if (vida == 0) game.clear()
+	}
 	method tocarEnemigo(){
 		position = posicionInicial
 		vida -= 1
