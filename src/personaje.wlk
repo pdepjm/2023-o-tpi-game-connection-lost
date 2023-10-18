@@ -13,7 +13,8 @@ object personaje {
 	method cambiarDireccion(direccionNueva){
 		direccion = direccionNueva
 	}
-	method image() = "personaje_caminando_1.png"
+	method image() = "personaje"+direccion+".png"
+
 	
 	method disparar(){
 			const tiro = new Proyectil()
