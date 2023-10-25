@@ -5,10 +5,10 @@ import piedra.*
 import graficos.*
 
 program juego {
-	var altura = 50
-	var anchura = 100
+	var altura = 25
+	var anchura = 50
 	
-	game.cellSize(10)
+	game.cellSize(32)
 	game.width(anchura)
 	game.height(altura)
 	game.boardGround("fondo.png")
