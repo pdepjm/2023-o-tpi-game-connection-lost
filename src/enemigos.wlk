@@ -3,8 +3,8 @@ import personaje.*
 
 object enemigo1{
 	
-	const x = 0.randomUpTo(100) 
-	const y = 0.randomUpTo(50)
+	const x = 0.randomUpTo(game.width()) 
+	const y = 0.randomUpTo(game.height())
 	
 	var property position = game.at(x,y)
 	var property velocidad = 1 //Se comporta raro con valores no enteros
@@ -43,8 +43,8 @@ object enemigo1{
 	
 }
 object enemigo2{
-	const x = 0.randomUpTo(100) 
-	const y = 0.randomUpTo(50)
+	const x = 0.randomUpTo(game.width()) 
+	const y = 0.randomUpTo(game.height())
 	var property estaVivo = true
 	var property position = game.at(x,y)
 	var property velocidad = 1 //Se comporta raro con valores no enteros
@@ -97,8 +97,8 @@ object enemigo2{
 }
 
 class Fuego{
-	var property position = enemigo2.position()
-	const direccion = enemigo2.direccion()
+	var property position = game.center()
+	var property direccion = "right"
 	method image() = "fuego2.png"
 	method mover(){	
 		if(direccion == "right") {
@@ -114,9 +114,10 @@ class Fuego{
 		position = position.up(1)
 		}
 		
-		if(position.x() < 0 || position.x() > 150|| position.y() < 0|| position.y() > 100){
+		if(position.x() < 0 || position.x() > game.width()|| position.y() < 0|| position.y() > game.height()){
 			self.eliminarTiro()
 		}
+		game.onCollideDo(self,{algo => algo.tocarFuego()})
 		
 	}
 
@@ -126,3 +127,85 @@ class Fuego{
 	}
 	method tocarEnemigo(){}
 }
+
+class Enemigo{
+	var position = null
+	var direccion = "right"
+	const velocidad = 1
+	method direccion() = direccion
+	method position() = position
+	method image() = "enemigo2.png"
+	method aparecer(){
+		position = game.at(0.randomUpTo(game.width()), 0.randomUpTo(game.height()))
+		game.addVisual(self)
+		self.perseguirEnemigo()
+	}
+	method perseguirEnemigo(){
+		game.onTick(1000, "acercarse",{self.acercarse(personaje)})
+	}
+	method acercarse(objetivo) {
+		const diferenciaX = objetivo.position().x() - self.position().x()
+    	const diferenciaY = objetivo.position().y() - self.position().y()
+		if (diferenciaX.abs() > diferenciaY.abs()) {
+			if (diferenciaX > 0) {
+            position = position.right(velocidad)
+            direccion = "right"
+        } else {
+            position = position.left(velocidad)
+            direccion = "left"
+        }
+    	}
+    	else{
+    		if (diferenciaY > 0) {
+            position = position.up(velocidad)
+            direccion = "up"
+        } else {
+            position = position.down(velocidad)
+            direccion = "down"
+        }
+    	}
+	
+	}
+	method desaparecer(){
+		if(game.hasVisual(self)){
+			game.removeVisual(self)
+			game.removeTickEvent("acercarse")
+		}
+	}
+	method tocarPersonaje(){
+		personaje.cambiarPosition(game.center())
+		personaje.restarVida(1)
+		if (personaje.vida() == 0) game.clear()
+	}
+	method tocarTiro(){
+		self.desaparecer()
+	}
+}
+
+class Dragon inherits Enemigo{
+	override method image() = "enemigo2"+direccion+".png"
+	
+	method disparar(){
+          if(game.hasVisual(self)){
+          	const bala = new Fuego()
+			game.addVisual(bala)
+       		game.onTick(20, "moverFuego", {bala.mover()})      	
+       		game.whenCollideDo(bala, { elemento =>
+			if (elemento!= self){
+				elemento.tocarFuego()
+				bala.eliminarTiro()
+				}		
+			}) 	
+          }	
+		}
+	override method aparecer(){
+		super()
+		game.onTick(10000, "DisparoDragon",{self.disparar()})
+	}		
+	}
+
+
+
+
+
+
