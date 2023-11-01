@@ -13,5 +13,8 @@ object vida {
 	} 
 	
 	method textColor() = "FFFFFFF"
+	method aparecer(){
+		game.addVisual(self)
+	}
 	
 }
