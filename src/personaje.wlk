@@ -16,13 +16,18 @@ object personaje {
 	method cambiarDireccion(direccionNueva){
 		direccion = direccionNueva
 	}
+	
 	method restarVida(cant){
 		vida-=cant
 	}
+	
+
+	
 	method disparar(){
 			const tiro = new Proyectil()
+			tiro.aumentarIdentificador()
 			game.addVisual(tiro)
-        	game.onTick(10,"mover", {tiro.mover()})      	
+        	game.onTick(10,"moverTiro"+tiro.identificador(), {tiro.mover()})      	
         	game.whenCollideDo(tiro, { elemento =>
 				if (elemento!= self){
 					elemento.tocarTiro()
@@ -30,6 +35,7 @@ object personaje {
 				}		
 			}) 	
 	}
+	
 	method recibirDanio(cantidad) {
 		position = game.center()
 		vida -= cantidad
@@ -43,9 +49,18 @@ object personaje {
 
 }
 class Proyectil {
+	
+	//Propiedades
 	var property position = personaje.position()
+	var property identificador = 0
 	const direccion = personaje.direccion()
 	method image() = "bala.png"
+	
+	//Metodos
+	method aumentarIdentificador(){
+		identificador+=1
+	}
+
 	method mover(){
 		
 		if(direccion == "right") {
@@ -66,13 +81,14 @@ class Proyectil {
 		}
 		
 	}
-	method tocarFuego(){}
+	
 	method tocarPersonaje(){}
 	method eliminarTiro() {
 		game.removeVisual(self)
-		game.removeTickEvent("mover")
+		game.removeTickEvent("moverTiro"+identificador)
 	}
 	
 }
+
 
 
