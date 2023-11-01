@@ -3,39 +3,10 @@ import personaje.*
 import enemigos.*
 import piedra.*
 import graficos.*
+import main.*
 
 program juego {
-	var altura = 20
-	var anchura = 40
-	
-	game.cellSize(32)
-	game.width(anchura)
-	game.height(altura)
-	game.boardGround("fondo.png")
-	game.title("Juego Base")
-	
-	
-	game.schedule(2000,{new Dragon(vida = 3).aparecer()})
-
-	
-	
-	game.addVisualCharacter(personaje)
-	game.addVisual(enemigo1)
-	game.addVisual(piedra)
-	game.addVisual(vida)
-	game.addVisual(enemigo2)
-	
-	keyboard.left().onPressDo({personaje.cambiarDireccion("left")})
-	keyboard.right().onPressDo({personaje.cambiarDireccion("right")})
-	keyboard.up().onPressDo({personaje.cambiarDireccion("up")})
-	keyboard.down().onPressDo({personaje.cambiarDireccion("down")})
-	keyboard.z().onPressDo({personaje.disparar()})
-	
-	game.onTick(enemigo1.cooldown() ,"Acercarse1", {enemigo1.acercarse(personaje)})  
-	game.onTick(enemigo2.cooldown() ,"Acercarse2", {enemigo2.acercarse(personaje)}) 
-	
-	
-	game.onCollideDo(personaje, {objeto => objeto.tocarPersonaje()})
-
+	main.iniciar()
 	game.start()
 }
+
