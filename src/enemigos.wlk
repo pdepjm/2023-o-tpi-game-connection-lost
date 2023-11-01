@@ -1,7 +1,6 @@
 import wollok.game.*
 import personaje.*
 
-
 class Fuego{
 	var property position = null
 	var property direccion = null
@@ -97,6 +96,21 @@ class Enemigo{
 	method recibirDanio(cantidad){
 		vida -= cantidad
 		if (vida <= 0) self.desaparecer()
+	}
+	method retroceder() {
+		if (direccion == "up") {
+			position = position.down(1)
+			direccion = "up"
+		}
+		if (direccion == "down") {
+			position = position.up(1)
+		}
+		if (direccion == "left") {
+			position = position.right(1)
+		}
+		if (direccion == "right") {
+			position = position.left(1)
+		}
 	}
 	
 	//Colisiones

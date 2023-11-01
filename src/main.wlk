@@ -3,6 +3,7 @@ import personaje.*
 import enemigos.*
 import piedra.*
 import graficos.*
+import arena.*
 
 object main {
 	method iniciar(){
@@ -15,34 +16,34 @@ object main {
 	game.boardGround("fondo.png")
 	game.title("Juego Base")
 	
-	const dragon1 = new Dragon()
-	const pooka1 = new Pooka()
-	const pooka2 = new Pooka()
-	const pooka3 = new Pooka()
-	const pooka4 = new Pooka()
-	const piedra1 = new Piedra()
+	//Declarar Objetos
+	const dragon1 = new Dragon(position = game.at(1,1))
+	const pooka1 = new Pooka(position = game.at(40,15))
+	const pooka2 = new Pooka(position = game.at(18,7))
+	const pooka3 = new Pooka(position = game.at(40,40))
+	const pooka4 = new Pooka(position = game.at(5,19))
+	const piedra1 = new Piedra(position = game.at(15,15))
+	const arenaTest = new Arena(position = game.at(15,5))
 		
-	pooka1.cambiarPosicion(game.at(8,18))
-	pooka2.cambiarPosicion(game.at(21,15))
-	pooka3.cambiarPosicion(game.at(32,5))
-	pooka4.cambiarPosicion(game.at(32,16))
-	dragon1.cambiarPosicion(game.at(11,7))
-	
-	game.addVisual(piedra1)
-	game.addVisualCharacter(personaje)
+	//Spawnear Objetos
+	game.addVisual(personaje)
 	dragon1.aparecer()
 	pooka1.aparecer()
 	pooka2.aparecer()
 	pooka3.aparecer()
 	pooka4.aparecer()
 	vida.aparecer()
-		
+	arenaTest.aparecer()
+	piedra1.aparecer()
+	
+	//Inputs
 	keyboard.left().onPressDo({personaje.cambiarDireccion("left")})
 	keyboard.right().onPressDo({personaje.cambiarDireccion("right")})
 	keyboard.up().onPressDo({personaje.cambiarDireccion("up")})
 	keyboard.down().onPressDo({personaje.cambiarDireccion("down")})
 	keyboard.z().onPressDo({personaje.disparar()})
 		
+	//Colision Protagonista
 	game.onCollideDo(personaje, {objeto => objeto.tocarPersonaje()})
 	
 	}
