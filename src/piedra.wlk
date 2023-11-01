@@ -6,7 +6,7 @@ class Arena{
 	method image() = "arena.png"
 }
 
-object piedra{
+class Piedra{
 	var property velocidad = 1
 	var property quieta = true
 	var property position = game.at(15,15)
@@ -38,4 +38,5 @@ object piedra{
 	}
 	method tocarEnemigo(){}
 	method tocarFuego(){}
+	method tocarPersonaje(){}
 }
