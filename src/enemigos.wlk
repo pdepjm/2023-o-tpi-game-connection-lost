@@ -1,5 +1,6 @@
 import wollok.game.*
 import personaje.*
+import main.*
 
 class Fuego{
 	var property position = null
@@ -95,7 +96,10 @@ class Enemigo{
 	}
 	method recibirDanio(cantidad){
 		vida -= cantidad
-		if (vida <= 0) self.desaparecer()
+		if (vida <= 0){
+			self.desaparecer()
+			main.restarEnemigos()
+		} 
 	}
 	method retroceder() {
 		if (direccion == "up") {
@@ -117,14 +121,16 @@ class Enemigo{
 	method tocarPersonaje(){
 		personaje.cambiarPosition(game.center())
 		personaje.restarVida(1)
-		if (personaje.vida() == 0) game.clear()
+		if (personaje.vida() <= 0) main.terminarJuego()
 	}
 	method tocarTiro(){
 		self.recibirDanio(1)
+		personaje.cambiarPuntuacion(100)
 	}
 	method tocarFuego(){}
 	method tocarPiedra(){
 		self.recibirDanio(3)
+		personaje.cambiarPuntuacion(300)
 	}
 }
 

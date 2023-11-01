@@ -6,10 +6,15 @@ object personaje {
 	var property position = game.center()
 	var property direccion = "right"
 	var vida = 3
+	var puntuacion = 0
 	method image() = "personaje"+direccion+".png"
 	method vida() = vida
+	method puntuacion() = puntuacion
 	
 	//Metodos
+	method cambiarPuntuacion(puntos){
+		puntuacion += puntos
+	}
 	method cambiarPosition(nueva){
 		position = nueva
 	}

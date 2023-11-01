@@ -18,3 +18,16 @@ object vida {
 	}
 	
 }
+object gameOver{
+	method position() = game.at(4,4)
+	method image() = "game over.png"
+}
+object score{
+	method position() = game.at(17,3)
+	method image() = "score.png"
+}
+object puntaje{
+	method position() = game.at(19,1)
+	method text()=personaje.puntuacion().toString()
+	method textColor() = "FFFFFFF"
+}
