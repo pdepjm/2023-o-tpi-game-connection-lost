@@ -2,23 +2,23 @@ import wollok.game.*
 import enemigos.*
 
 object personaje {
+	//Propiedades
 	var property position = game.center()
 	var property direccion = "right"
 	var vida = 3
+	method image() = "personaje"+direccion+".png"
+	method vida() = vida
 	
+	//Metodos
 	method cambiarPosition(nueva){
 		position = nueva
 	}
 	method cambiarDireccion(direccionNueva){
 		direccion = direccionNueva
 	}
-	method vida() = vida
 	method restarVida(cant){
 		vida-=cant
 	}
-	method image() = "personaje"+direccion+".png"
-
-	
 	method disparar(){
 			const tiro = new Proyectil()
 			game.addVisual(tiro)
@@ -30,19 +30,16 @@ object personaje {
 				}		
 			}) 	
 	}
-	
-	
+	method recibirDanio(cantidad) {
+		position = game.center()
+		vida -= cantidad
+		if (vida == 0) game.clear()
+	}
+	//Colisiones
 	method tocarTiro() {}
-	method tocarFuego(){
-		position = game.center()
-		vida -= 1
-		if (vida == 0) game.clear()
-	}
-	method tocarEnemigo(){
-		position = game.center()
-		vida -= 1
-		if (vida == 0) game.clear()
-	}
+	method tocarFuego(){self.recibirDanio(1)}
+	method tocarEnemigo(){self.recibirDanio(1)}
+	method tocarPiedra() {self.recibirDanio(1)}
 
 }
 class Proyectil {
@@ -69,7 +66,7 @@ class Proyectil {
 		}
 		
 	}
-	
+	method tocarFuego(){}
 	method tocarPersonaje(){}
 	method eliminarTiro() {
 		game.removeVisual(self)

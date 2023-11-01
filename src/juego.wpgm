@@ -15,7 +15,7 @@ program juego {
 	game.title("Juego Base")
 	
 	
-	game.schedule(2000,{new Dragon().aparecer()})
+	game.schedule(2000,{new Dragon(vida = 3).aparecer()})
 
 	
 	

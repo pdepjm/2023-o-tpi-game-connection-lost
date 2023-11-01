@@ -129,12 +129,16 @@ class Fuego{
 }
 
 class Enemigo{
+	//Propiedades
 	var position = null
 	var direccion = "right"
+	var vida = 1
 	const velocidad = 1
 	method direccion() = direccion
 	method position() = position
 	method image() = "enemigo2.png"
+	
+	//Metodos
 	method aparecer(){
 		position = game.at(0.randomUpTo(game.width()), 0.randomUpTo(game.height()))
 		game.addVisual(self)
@@ -172,14 +176,20 @@ class Enemigo{
 			game.removeTickEvent("acercarse")
 		}
 	}
+	method recibirDanio(cantidad) {
+		vida -= cantidad
+		if (vida == 0) self.desaparecer()
+	}
+	
+	//Colisiones	
 	method tocarPersonaje(){
 		personaje.cambiarPosition(game.center())
 		personaje.restarVida(1)
 		if (personaje.vida() == 0) game.clear()
 	}
-	method tocarTiro(){
-		self.desaparecer()
-	}
+	method tocarFuego(){}
+	method tocarTiro(){self.recibirDanio(1)}
+	method tocarPiedra() {self.recibirDanio(3)}
 }
 
 class Dragon inherits Enemigo{
@@ -187,7 +197,12 @@ class Dragon inherits Enemigo{
 	
 	method disparar(){
           if(game.hasVisual(self)){
-          	const bala = new Fuego()
+          	
+          	// Esto hace que "position" del nuevo fuego sea igual a "position" de el dragon. 
+          	// Debe hacerse así porque ambas posiciones tienen el mismo nombre
+          	// PS: Termine haciendo lo mismo con direccion
+          	const bala = new Fuego(position = position, direccion = direccion)
+          	
 			game.addVisual(bala)
        		game.onTick(20, "moverFuego", {bala.mover()})      	
        		game.whenCollideDo(bala, { elemento =>

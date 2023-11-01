@@ -12,4 +12,6 @@ object vida {
 		else "Cantidad de vidas = 1"
 	} 
 	
+	method textColor() = "FFFFFFF"
+	
 }
