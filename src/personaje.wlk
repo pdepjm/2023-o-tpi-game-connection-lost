@@ -80,7 +80,6 @@ object personaje {
 	
 	//Colisiones
 	method tocarTiro() {}
-	method tocarFuego(){self.recibirDanio(1)}
 	method tocarEnemigo(){self.recibirDanio(1)}
 	method tocarPiedra() {self.recibirDanio(1)}
 

@@ -34,7 +34,7 @@ class Fuego{
 			self.eliminarTiro()
 		}
 		}
-		game.onCollideDo(self,{algo => algo.tocarFuego()})	
+		
 	}
 
 	method eliminarTiro() {
@@ -130,7 +130,7 @@ class Enemigo{
 		self.recibirDanio(1)
 		personaje.cambiarPuntuacion(100)
 	}
-	method tocarFuego(){}
+	method tocarEnemigo(){}
 	method tocarPiedra(){
 		self.recibirDanio(3)
 		personaje.cambiarPuntuacion(300)
@@ -150,7 +150,7 @@ class Dragon inherits Enemigo{
        		game.onTick(20, "moverFuego"+bala.identificador().toString(), {bala.mover()})      	
        		game.whenCollideDo(bala, { elemento =>
 			if (elemento!= self){
-				elemento.tocarFuego()
+				elemento.tocarEnemigo()
 				bala.eliminarTiro()
 				bala.aumentarIdentificador()
 				}		
