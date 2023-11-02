@@ -4,7 +4,7 @@ import personaje.*
 class Piedra{
 	var property velocidad = 1
 	var property quieta = true
-	var property position = null
+	var property position = game.at(0.randomUpTo(40), 0.randomUpTo(20))
 	method image() = "piedra.png"
 	
 	method aparecer() {
@@ -47,4 +47,5 @@ class Piedra{
 	method tocarEnemigo(){}
 	method tocarFuego(){}
 	method tocarPersonaje(){}
+	method tocarPiedra(){}
 }

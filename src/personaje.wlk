@@ -1,5 +1,6 @@
 import wollok.game.*
 import enemigos.*
+import arena.*
 
 object personaje {
 	//Propiedades
@@ -38,16 +39,22 @@ object personaje {
 	}
 	method disparar(){
 			const tiro = new Proyectil()
-			tiro.aumentarIdentificador()
 			game.addVisual(tiro)
         	game.onTick(10,"moverTiro"+tiro.identificador().toString(), {tiro.mover()})      	
         	game.whenCollideDo(tiro, { elemento =>
 				if (elemento!= self){
 					elemento.tocarTiro()
 					tiro.eliminarTiro()	
+					tiro.aumentarIdentificador()
 				}		
 			}) 	
-	}	
+	}
+	method ponerArena(){
+		const arena = new Arena(position = position)
+		arena.aparecer()
+		self.cambiarPuntuacion(-1)
+	}
+		
 	method recibirDanio(cantidad) {
 		position = game.center()
 		vida -= cantidad
@@ -68,6 +75,8 @@ object personaje {
 			position = position.left(1)
 		}
 	}
+	
+	
 	
 	//Colisiones
 	method tocarTiro() {}

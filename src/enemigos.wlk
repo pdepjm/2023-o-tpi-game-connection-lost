@@ -38,7 +38,7 @@ class Fuego{
 	}
 
 	method eliminarTiro() {
-		game.removeTickEvent("moverFuego"+identificador)
+		game.removeTickEvent("moverFuego"+identificador.toString())
 		game.removeVisual(self)		
 	}
 	method tocarEnemigo(){}
@@ -47,7 +47,7 @@ class Fuego{
 class Enemigo{
 	
 	//Propiedades
-	var position = null
+	var position = game.at(0.randomUpTo(40), 0.randomUpTo(20))
 	var direccion = "right"
 	var vida = 1
 	const velocidad = 1
@@ -98,7 +98,6 @@ class Enemigo{
 		vida -= cantidad
 		if (vida <= 0){
 			self.desaparecer()
-			main.restarEnemigos()
 		} 
 	}
 	method retroceder() {
@@ -143,13 +142,13 @@ class Dragon inherits Enemigo{
           	// Debe hacerse así porque ambas posiciones tienen el mismo nombre
           	// PS: Termine haciendo lo mismo con direccion
           	const bala = new Fuego(position = position, direccion = direccion)
-			bala.aumentarIdentificador()
 			game.addVisual(bala)
        		game.onTick(20, "moverFuego"+bala.identificador().toString(), {bala.mover()})      	
        		game.whenCollideDo(bala, { elemento =>
 			if (elemento!= self){
 				elemento.tocarFuego()
 				bala.eliminarTiro()
+				bala.aumentarIdentificador()
 				}		
 			}) 	
           }	
@@ -162,6 +161,7 @@ class Dragon inherits Enemigo{
 
 class Pooka inherits Enemigo{
 	override method image() = "enemigo1"+direccion+".png"
+	
 }
 
 
