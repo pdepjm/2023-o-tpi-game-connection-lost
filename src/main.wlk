@@ -4,9 +4,11 @@ import enemigos.*
 import piedra.*
 import graficos.*
 import arena.*
+import frutas.*
 
 object main {
 	var cantEnemigos = 5
+	
 	method cantEnemigos() = cantEnemigos
 	method restarEnemigos(){
 		cantEnemigos -= 1
@@ -14,6 +16,7 @@ object main {
 			self.terminarJuego()
 		}
 	}
+
 	method iniciar(){
 	const altura = 20
 	const anchura = 40
@@ -31,6 +34,7 @@ object main {
 	const pooka3 = new Pooka(position = game.at(40,19))
 	const pooka4 = new Pooka(position = game.at(5,19))
 	const piedra1 = new Piedra(position = game.at(15,15))
+	const fruta = new Fruta()
 	const arenaTest = new Arena(position = game.at(15,5))
 		
 	//Spawnear Objetos
@@ -42,6 +46,7 @@ object main {
 	pooka4.aparecer()
 	vida.aparecer()
 	arenaTest.aparecer()
+	fruta.aparecer()
 	piedra1.aparecer()
 	
 	//Inputs
