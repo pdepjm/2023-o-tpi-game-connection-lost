@@ -60,8 +60,12 @@ class Enemigo{
 	
 	//Metodos
 	method aparecer(){
-		game.addVisual(self)
-		self.perseguirEnemigo()
+		if(self.position() == personaje.position()){
+			self.aparecer()
+		}else{
+			game.addVisual(self)
+			self.perseguirEnemigo()
+		}
 	}
 	method perseguirEnemigo(){
 		game.onTick(1000, "acercarse",{self.acercarse(personaje)})
