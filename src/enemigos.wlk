@@ -159,7 +159,7 @@ class Dragon inherits Enemigo{
 		}
 	override method aparecer(){
 		super()
-		game.onTick(5000, "DisparoDragon",{self.disparar()})
+		game.onTick(3000, "DisparoDragon",{self.disparar()})
 	}		
 	}
 

@@ -21,7 +21,7 @@ class Piedra{
 	}
 	method detenerse(){
 		game.removeTickEvent("caer")
-		quieta = false
+		quieta = true
 	}
 	method caer() {
 		position = position.down(velocidad)

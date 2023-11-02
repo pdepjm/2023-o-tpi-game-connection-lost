@@ -19,7 +19,7 @@ object main {
 	game.title("Dig Dug")
 	
 	//Declarar Objetos
-	const dragon1 = new Dragon()
+	const dragon1 = new Dragon(vida = 3)
 	const pooka1 = new Pooka()
 	const pooka2 = new Pooka()
 	const pooka3 = new Pooka()
