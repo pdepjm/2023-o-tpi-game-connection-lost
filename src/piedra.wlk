@@ -26,7 +26,7 @@ class Piedra{
 	method caer() {
 		position = position.down(velocidad)
 		
-		if (position.x() < 0 || position.x() > 150|| position.y() < 0|| position.y() > 100) {
+		if (position.x() < 0 || position.x() > game.width()|| position.y() < 0|| position.y() > game.height()) {
 			self.borrarse()
 		}
 		

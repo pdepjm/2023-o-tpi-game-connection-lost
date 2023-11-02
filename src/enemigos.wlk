@@ -145,7 +145,7 @@ class Dragon inherits Enemigo{
           	const bala = new Fuego(position = position, direccion = direccion)
 			bala.aumentarIdentificador()
 			game.addVisual(bala)
-       		game.onTick(20, "moverFuego"+bala.identificador(), {bala.mover()})      	
+       		game.onTick(20, "moverFuego"+bala.identificador().toString(), {bala.mover()})      	
        		game.whenCollideDo(bala, { elemento =>
 			if (elemento!= self){
 				elemento.tocarFuego()

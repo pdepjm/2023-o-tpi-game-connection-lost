@@ -40,7 +40,7 @@ object personaje {
 			const tiro = new Proyectil()
 			tiro.aumentarIdentificador()
 			game.addVisual(tiro)
-        	game.onTick(10,"moverTiro"+tiro.identificador(), {tiro.mover()})      	
+        	game.onTick(10,"moverTiro"+tiro.identificador().toString(), {tiro.mover()})      	
         	game.whenCollideDo(tiro, { elemento =>
 				if (elemento!= self){
 					elemento.tocarTiro()
@@ -92,6 +92,9 @@ class Proyectil {
 
 	method mover(){
 		
+		if(position.x() < 0 || position.x() > game.width()|| position.y() < 0|| position.y() > game.height()){
+			self.eliminarTiro()
+		}
 		if(direccion == "right") {
 		position = position.right(1)
 		}
@@ -105,16 +108,13 @@ class Proyectil {
 		position = position.left(1)
 		}
 		
-		if(position.x() < 0 || position.x() > game.width()|| position.y() < 0|| position.y() > game.height()){
-			self.eliminarTiro()
-		}
-		
 	}
 	
 	method tocarPersonaje(){}
 	method eliminarTiro() {
+		game.removeTickEvent("moverTiro"+identificador.toString())
 		game.removeVisual(self)
-		game.removeTickEvent("moverTiro"+identificador)
+		
 	}
 	
 }
