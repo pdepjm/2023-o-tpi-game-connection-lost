@@ -37,4 +37,5 @@ class Arena {
     method tocarPiedra() {
     	self.recibirDanio(1)
     }
+    method retroceder(){}
 }

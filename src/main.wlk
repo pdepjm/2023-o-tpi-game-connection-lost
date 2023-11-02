@@ -32,7 +32,7 @@ object main {
 		
 	//Spawnear Objetos
 	game.addVisual(personaje)
-	dragon1.aparecer()
+	game.schedule(0.randomUpTo(20000),{dragon1.aparecer()})
 	pooka1.aparecer()
 	pooka2.aparecer()
 	pooka3.aparecer()
