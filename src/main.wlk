@@ -46,8 +46,9 @@ object main {
 	pooka4.aparecer()
 	vida.aparecer()
 	arenaTest.aparecer()
-	fruta.aparecer()
 	piedra1.aparecer()
+	
+	game.onTick(7000, "aparecer fruta", {fruta.aparecer()})
 	
 	//Inputs
 	keyboard.left().onPressDo({personaje.cambiarDireccion("left")})
