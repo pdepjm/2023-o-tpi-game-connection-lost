@@ -30,22 +30,15 @@ object main {
 	game.title("Dig Dug")
 	
 	//Declarar Objetos
+
+
+	3.times({x => new Pooka().aparecer()})
 	
-	
-	const pooka1 = new Pooka()
-	const pooka2 = new Pooka()
-	const pooka3 = new Pooka()
-	
-	5.times({x =>
-		new Piedra().aparecer()
-	})
+	5.times({x =>new Piedra().aparecer()})
 		
 	//Spawnear Objetos
 	game.addVisual(personaje)
 	game.schedule(0.randomUpTo(20000),{dragon1.aparecer()})
-	pooka1.aparecer()
-	pooka2.aparecer()
-	pooka3.aparecer()
 
 	vida.aparecer()
 	self.agregarPooka()
