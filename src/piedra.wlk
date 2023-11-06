@@ -1,5 +1,6 @@
 import wollok.game.*
 import personaje.*
+import main.*
 
 class Piedra{
 	var property velocidad = 1
@@ -21,21 +22,18 @@ class Piedra{
 	}
 	method detenerse(){
 		game.removeTickEvent("caer")
-		quieta = false
+		quieta = true
 	}
 	method caer() {
 		position = position.down(velocidad)
 		
-		if (position.x() < 0 || position.x() > game.width()|| position.y() < 0|| position.y() > game.height()) {
+		if (main.dentroDePantalla(self.position())) {
 			self.borrarse()
 		}
 		
 		game.whenCollideDo(self, { elemento =>
 		if (!quieta){
-		elemento.tocarPiedra()
-		}		
-		if (elemento.image() == "arena.png") {
-			self.detenerse()
+		elemento.tocarPiedra(self)
 		}
 	}) 	
 	}
@@ -44,8 +42,8 @@ class Piedra{
 		self.detenerse()
 		game.removeVisual(self)
 	}
-	method tocarEnemigo(){}
-	method tocarFuego(){}
-	method tocarPersonaje(){}
-	method tocarPiedra(){}
+	method tocarEnemigo(enemigo){}
+	method tocarPersonaje(pj){}
+	method tocarPiedra(piedra){}
+	method retroceder() {}
 }

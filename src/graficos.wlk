@@ -16,6 +16,7 @@ object vida {
 	method aparecer(){
 		game.addVisual(self)
 	}
+	method tocarEnemigo(enemigo){}
 	
 }
 object gameOver{
@@ -28,6 +29,6 @@ object score{
 }
 object puntaje{
 	method position() = game.at(19,1)
-	method text()=personaje.puntuacion().toString()
+	method text() = personaje.puntuacion().toString()
 	method textColor() = "FFFFFFF"
 }

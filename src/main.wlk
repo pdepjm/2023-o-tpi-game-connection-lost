@@ -6,11 +6,22 @@ import graficos.*
 import arena.*
 
 object main {
-	
-	
-	method iniciar(){
 	const altura = 20
 	const anchura = 40
+	const dragon1 = new Dragon(vida = 3)
+	var cantidadEnemigos = 4
+	
+	method dentroDePantalla(position) {
+		return (position.x() < 0 || position.x() > anchura || position.y() < 0|| position.y() > altura )
+	}
+	
+	method cambiarCantidadEnemigos(numero) {
+		cantidadEnemigos += numero
+	}	
+	
+	method dragon1() = dragon1
+	
+	method iniciar(){
 	
 	game.cellSize(32)
 	game.width(anchura)
@@ -19,16 +30,15 @@ object main {
 	game.title("Dig Dug")
 	
 	//Declarar Objetos
-	const dragon1 = new Dragon()
+	
+	
 	const pooka1 = new Pooka()
 	const pooka2 = new Pooka()
 	const pooka3 = new Pooka()
-	const piedra1 = new Piedra()
-	const piedra2 = new Piedra()
-	const piedra3 = new Piedra()
-	const piedra4 = new Piedra()
-	const piedra5 = new Piedra()
-
+	
+	5.times({x =>
+		new Piedra().aparecer()
+	})
 		
 	//Spawnear Objetos
 	game.addVisual(personaje)
@@ -36,11 +46,7 @@ object main {
 	pooka1.aparecer()
 	pooka2.aparecer()
 	pooka3.aparecer()
-	piedra1.aparecer()
-	piedra2.aparecer()
-	piedra3.aparecer()
-	piedra4.aparecer()
-	piedra5.aparecer()
+
 	vida.aparecer()
 	self.agregarPooka()
 	
@@ -53,14 +59,19 @@ object main {
 	keyboard.x().onPressDo({personaje.ponerArena()})
 		
 	//Colision Protagonista
-	game.onCollideDo(personaje, {objeto => objeto.tocarPersonaje()})
+	game.onCollideDo(personaje, {objeto => objeto.tocarPersonaje(personaje)})
 	
 	//Terminacion Juego
 	game.schedule(30000, {=>self.terminarJuego()})
 	
 	}
 	method agregarPooka() {
-		game.onTick(2000,"agregar pooka",{new Pooka().aparecer()}) 
+		game.onTick(2000,"agregar pooka",{
+			if (cantidadEnemigos < 10) {
+				new Pooka().aparecer()
+				self.cambiarCantidadEnemigos(1)
+			}
+		}) 
 		
 	}
 	

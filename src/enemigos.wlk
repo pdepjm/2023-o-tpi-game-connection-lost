@@ -5,16 +5,18 @@ import main.*
 class Fuego{
 	var property position = null
 	var property direccion = null
-	var property identificador = 0
+	var identificador = 0
+	
+	method cambiarIdentificador(nuevo){
+		identificador = nuevo
+	}
 	method cambiarPosicion(posNueva){
 		position = posNueva
 	}
 	method cambiarDireccion(nuevaDir){
 		direccion = nuevaDir
 	}
-	method aumentarIdentificador(){
-		identificador+=1
-	}
+	
 	method image() = "fuego2.png"
 	method mover(){	
 		if (game.hasVisual(self)){
@@ -30,18 +32,18 @@ class Fuego{
 		else if(direccion == "up") {
 		position = position.up(1)
 		}
-		if(position.x() <= 0 || position.x() >= game.width()|| position.y() <= 0|| position.y() >= game.height()){
-			self.eliminarTiro()
+		if(main.dentroDePantalla(self.position())){
+			self.eliminarTiro(main.dragon1())
 		}
 		}
 		
 	}
 
-	method eliminarTiro() {
-		game.removeTickEvent("moverFuego"+identificador.toString())
+	method eliminarTiro(tirador) {
+		game.removeTickEvent("moverFuego"+tirador.identificador().toString())
 		game.removeVisual(self)		
 	}
-	method tocarEnemigo(){}
+	method tocarEnemigo(enemigo){}
 }
 
 class Enemigo{
@@ -66,6 +68,10 @@ class Enemigo{
 			game.addVisual(self)
 			self.perseguirEnemigo()
 		}
+		
+		game.whenCollideDo(self, { elemento =>
+				elemento.tocarEnemigo(self)	
+			}) 	
 	}
 	method perseguirEnemigo(){
 		game.onTick(1000, "acercarse",{self.acercarse(personaje)})
@@ -75,27 +81,28 @@ class Enemigo{
     	const diferenciaY = objetivo.position().y() - self.position().y()
 		if (diferenciaX.abs() > diferenciaY.abs()) {
 			if (diferenciaX > 0) {
-            position = position.right(velocidad)
-            direccion = "right"
-        } else {
-            position = position.left(velocidad)
-            direccion = "left"
-        }
+	            position = position.right(velocidad)
+	            direccion = "right"
+	        } else {
+	            position = position.left(velocidad)
+	            direccion = "left"
+	        }
     	}
     	else{
     		if (diferenciaY > 0) {
-            position = position.up(velocidad)
-            direccion = "up"
-        } else {
-            position = position.down(velocidad)
-            direccion = "down"
-        }
+	            position = position.up(velocidad)
+	            direccion = "up"
+	        } else {
+	            position = position.down(velocidad)
+	            direccion = "down"
+	        }
     	}
 	
 	}
 	method desaparecer(){
 		if(game.hasVisual(self)){
 			game.removeVisual(self)
+			main.cambiarCantidadEnemigos(-1)
 		}
 	}
 	method recibirDanio(cantidad){
@@ -121,51 +128,52 @@ class Enemigo{
 	}
 	
 	//Colisiones
-	method tocarPersonaje(){
-		personaje.cambiarPosition(game.center())
-		personaje.restarVida(1)
-		if (personaje.vida() <= 0) main.terminarJuego()
-	}
+	method tocarPersonaje(pj){pj.recibirDanio(1)}
+	method tocarEnemigo(enemigo){}
+	
 	method tocarTiro(){
 		self.recibirDanio(1)
 		personaje.cambiarPuntuacion(100)
 	}
-	method tocarEnemigo(){}
-	method tocarPiedra(){
+	
+	method tocarPiedra(piedra){
 		self.recibirDanio(3)
 		personaje.cambiarPuntuacion(300)
 	}
 }
 
 class Dragon inherits Enemigo{
+	var property identificador = 0
+	
+	method aumentarIdentificador(){
+		identificador+=1
+	}
+	
 	override method image() = "enemigo2"+direccion+".png"
 	
 	method disparar(){
-          if(game.hasVisual(self)){
-          	// Esto hace que "position" del nuevo fuego sea igual a "position" de el dragon. 
-          	// Debe hacerse así porque ambas posiciones tienen el mismo nombre
-          	// PS: Termine haciendo lo mismo con direccion
-          	const bala = new Fuego(position = position, direccion = direccion)
+      if(game.hasVisual(self)){
+			const bala = new Fuego(position = position, direccion = direccion)
 			game.addVisual(bala)
-       		game.onTick(20, "moverFuego"+bala.identificador().toString(), {bala.mover()})      	
-       		game.whenCollideDo(bala, { elemento =>
-			if (elemento!= self){
-				elemento.tocarEnemigo()
-				bala.eliminarTiro()
-				bala.aumentarIdentificador()
-				}		
+			game.onTick(20, "moverFuego"+identificador.toString(), {bala.mover()})      	
+			game.whenCollideDo(bala, { elemento =>
+				if (elemento!= self){
+					elemento.tocarEnemigo(self)
+					bala.eliminarTiro(self)
+					self.aumentarIdentificador()
+				}
 			}) 	
-          }	
-		}
+      }
+	}
+	
 	override method aparecer(){
 		super()
-		game.onTick(5000, "DisparoDragon",{self.disparar()})
+		game.onTick(3000, "DisparoDragon",{self.disparar()})
 	}		
-	}
+}
 
 class Pooka inherits Enemigo{
 	override method image() = "enemigo1"+direccion+".png"
-	
 }
 
 
