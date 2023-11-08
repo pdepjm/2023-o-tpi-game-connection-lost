@@ -25,17 +25,17 @@ class Piedra{
 		quieta = true
 	}
 	method caer() {
-		position = position.down(velocidad)
-		
-		if (main.dentroDePantalla(self.position())) {
+		if (main.dentroDePantalla(position)){
 			self.borrarse()
-		}
-		
-		game.whenCollideDo(self, { elemento =>
-		if (!quieta){
-		elemento.tocarPiedra(self)
+		}else{
+			position = position.down(velocidad)
+			game.whenCollideDo(self, { elemento =>
+			if (!quieta){
+			elemento.tocarPiedra(self)
 		}
 	}) 	
+		}
+	
 	}
 	
 	method borrarse(){

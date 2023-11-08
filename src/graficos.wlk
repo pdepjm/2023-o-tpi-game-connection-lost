@@ -16,6 +16,7 @@ object vida {
 		game.addVisual(self)
 	}
 	method tocarEnemigo(enemigo){}
+	method tocarTiro(){}
 	
 }
 object gameOver{
