@@ -1,10 +1,13 @@
 import wollok.game.*
 import enemigos.*
+import arena.*
+import main.*
 
 object personaje {
 	//Propiedades
 	var property position = game.center()
 	var property direccion = "right"
+	var property identificador = 0
 	var vida = 3
 	var puntuacion = 0
 	method image() = "personaje"+direccion+".png"
@@ -12,6 +15,7 @@ object personaje {
 	method puntuacion() = puntuacion
 	
 	//Metodos
+	
 	method cambiarPuntuacion(puntos){
 		puntuacion += puntos
 	}
@@ -32,26 +36,34 @@ object personaje {
 		if (direccion == "right") {
 			position = position.right(1)
 		}
-	}
-	method restarVida(cant){
-		vida-=cant
+		
+		if (main.dentroDePantalla(self.position())) {
+			self.retroceder()
+		}
 	}
 	method disparar(){
 			const tiro = new Proyectil()
-			tiro.aumentarIdentificador()
+			identificador+=1
 			game.addVisual(tiro)
-        	game.onTick(10,"moverTiro"+tiro.identificador().toString(), {tiro.mover()})      	
+        	game.onTick(10,"moverTiro"+self.identificador().toString(), {tiro.mover()})
+        	tiro.cambiarIdentificador(identificador)     	
         	game.whenCollideDo(tiro, { elemento =>
 				if (elemento!= self){
 					elemento.tocarTiro()
 					tiro.eliminarTiro()	
 				}		
 			}) 	
-	}	
+	}
+	method ponerArena(){
+		const arena = new Arena(position = position)
+		arena.aparecer()
+		self.cambiarPuntuacion(-1)
+	}
+		
 	method recibirDanio(cantidad) {
 		position = game.center()
 		vida -= cantidad
-		if (vida == 0) game.clear()
+		if (vida <= 0) main.terminarJuego()
 	}
 	method retroceder() {
 		if (direccion == "up") {
@@ -69,30 +81,32 @@ object personaje {
 		}
 	}
 	
+	
+	
 	//Colisiones
 	method tocarTiro() {}
-	method tocarFuego(){self.recibirDanio(1)}
-	method tocarEnemigo(){self.recibirDanio(1)}
-	method tocarPiedra() {self.recibirDanio(1)}
+	method tocarEnemigo(enemigo){self.recibirDanio(1)}
+	method tocarPiedra(piedra) {self.recibirDanio(1)}
 
 }
 
 class Proyectil {
-	
+	var  identificador = 0
 	//Propiedades
 	var property position = personaje.position()
-	var property identificador = 0
+	
 	const direccion = personaje.direccion()
 	method image() = "bala.png"
 	
 	//Metodos
-	method aumentarIdentificador(){
-		identificador+=1
+	
+	method cambiarIdentificador(nuevo){
+		identificador = nuevo
 	}
-
+	
 	method mover(){
 		
-		if(position.x() < 0 || position.x() > game.width()|| position.y() < 0|| position.y() > game.height()){
+		if(main.dentroDePantalla(self.position())){
 			self.eliminarTiro()
 		}
 		if(direccion == "right") {
@@ -110,7 +124,8 @@ class Proyectil {
 		
 	}
 	
-	method tocarPersonaje(){}
+	method tocarPersonaje(personaje){}
+	method tocarEnemigo(a){}
 	method eliminarTiro() {
 		game.removeTickEvent("moverTiro"+identificador.toString())
 		game.removeVisual(self)
