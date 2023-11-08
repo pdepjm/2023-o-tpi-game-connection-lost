@@ -36,6 +36,8 @@ object main {
 	3.times({x => new Pooka().aparecer()})
 	
 	5.times({x =>new Piedra().aparecer()})
+	
+	const fruta = new Fruta()
 		
 	//Spawnear Objetos
 	game.addVisual(personaje)
@@ -44,7 +46,10 @@ object main {
 	vida.aparecer()
 	self.agregarPooka()
 	
-	game.onTick(7000, "aparecer fruta", {fruta.aparecer()})
+	game.onTick(2000, "aparecer fruta", {
+		fruta.aparecer();
+		game.removeTickEvent("aparecer fruta");
+	})
 	
 	//Inputs
 	keyboard.left().onPressDo({personaje.cambiarDireccion("left")})

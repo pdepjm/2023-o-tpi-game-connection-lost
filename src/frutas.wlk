@@ -4,7 +4,7 @@ import main.*
 
 class Fruta{
 	//Propiedades
-	const position = game.at(0,0);
+	const position = game.center();
 	var property fruta = [manzana, banana, cebolla].anyOne();
 	
 	//Metodos
@@ -20,37 +20,42 @@ class Fruta{
 		if(game.hasVisual(self)){
 			game.removeTickEvent("desaparecer fruta");
 			game.removeVisual(self);
+			game.onTick(2000, "aparecer fruta", {fruta.aparecer()});
 		}
 	}
 	
 	//Colisiones
-	method tocarPersonaje(){
+	method tocarPersonaje(pj){
+		fruta.tocarPersonaje(pj);
+	}
+	method tocarTiro(){
 		self.desaparecer();
 	}
-	method tocarTiro(){}
+	method tocarEnemigo(enemigo){}
+	method tocarPiedra(piedra){}
 }
 
 object banana inherits Fruta{
 	override method image() = "banana.png"
-	override method tocarPersonaje(){
-		super();
-		personaje.cambiarPuntuacion(45);
+	override method tocarPersonaje(pj){
+		self.desaparecer();
+		personaje.cambiarPuntuacion(545);
 	}
 }
 
 object manzana inherits Fruta{
 	override method image() = "manzana.png"
-	override method tocarPersonaje(){
-		super();
-		personaje.restarVida(-1);
+	override method tocarPersonaje(pj){
+		self.desaparecer();
+		personaje.cambiarPuntuacion(5);
 	}
 }
 
 object cebolla inherits Fruta{
 	override method image() = "cebolla.png"
-	override method tocarPersonaje(){
-		super();
-		personaje.restarVida(1)
+	override method tocarPersonaje(pj){
+		self.desaparecer();
+		personaje.recibirDanio(1)
 		personaje.cambiarPuntuacion(-45);
 	}
 }
