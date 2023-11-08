@@ -1,16 +1,18 @@
 import wollok.game.*
 import personaje.*
 import main.*
+import direcciones.*
 
 class Fuego{
 	var property position = null
-	var property direccion = null
+	var property direccion = right
 	var identificador = 0
+
 	
 	method cambiarIdentificador(nuevo){
 		identificador = nuevo
 	}
-	method cambiarPosicion(posNueva){
+	method cambiarPosition(posNueva){
 		position = posNueva
 	}
 	method cambiarDireccion(nuevaDir){
@@ -20,18 +22,7 @@ class Fuego{
 	method image() = "fuego2.png"
 	method mover(){	
 		if (game.hasVisual(self)){
-		if(direccion == "right") {
-		position = position.right(1)
-		}
-		else if(direccion == "left") {
-		position = position.left(1)
-		}
-		if(direccion == "down") {
-		position = position.down(1)
-		}
-		else if(direccion == "up") {
-		position = position.up(1)
-		}
+		direccion.moverse(self,1)
 		if(main.dentroDePantalla(self.position())){
 			self.eliminarTiro(main.dragon1())
 		}
@@ -51,13 +42,15 @@ class Enemigo{
 	
 	//Propiedades
 	var position = game.at(0.randomUpTo(40), 0.randomUpTo(20))
-	var direccion = "right"
+	var direccion = right
 	var vida = 1
-	const velocidad = 1
 	method direccion() = direccion
 	method position() = position
-	method cambiarPosicion(nuevaPos){
+	method cambiarPosition(nuevaPos){
 		position = nuevaPos
+	}
+	method cambiarDireccion(nuevaDir){
+		direccion = nuevaDir
 	}
 	method image() = "enemigo2.png"
 	
@@ -82,20 +75,16 @@ class Enemigo{
     	const diferenciaY = objetivo.position().y() - self.position().y()
 		if (diferenciaX.abs() > diferenciaY.abs()) {
 			if (diferenciaX > 0) {
-	            position = position.right(velocidad)
-	            direccion = "right"
+	            right.moverse(self,1)
 	        } else {
-	            position = position.left(velocidad)
-	            direccion = "left"
+	            left.moverse(self,1)
 	        }
     	}
     	else{
     		if (diferenciaY > 0) {
-	            position = position.up(velocidad)
-	            direccion = "up"
+	           up.moverse(self,1)
 	        } else {
-	            position = position.down(velocidad)
-	            direccion = "down"
+	            down.moverse(self,1)
 	        }
     	}
 	
@@ -113,19 +102,7 @@ class Enemigo{
 		} 
 	}
 	method retroceder() {
-		if (direccion == "up") {
-			position = position.down(1)
-			direccion = "up"
-		}
-		if (direccion == "down") {
-			position = position.up(1)
-		}
-		if (direccion == "left") {
-			position = position.right(1)
-		}
-		if (direccion == "right") {
-			position = position.left(1)
-		}
+		direccion.moverse(self,-1)	
 	}
 	
 	//Colisiones
@@ -150,7 +127,7 @@ class Dragon inherits Enemigo{
 		identificador+=1
 	}
 	
-	override method image() = "enemigo2"+direccion+".png"
+	override method image() = "enemigo2"+direccion.nombre()+".png"
 	
 	method disparar(){
       if(game.hasVisual(self)){
@@ -174,7 +151,7 @@ class Dragon inherits Enemigo{
 }
 
 class Pooka inherits Enemigo{
-	override method image() = "enemigo1"+direccion+".png"
+	override method image() = "enemigo1"+direccion.nombre()+".png"
 }
 
 

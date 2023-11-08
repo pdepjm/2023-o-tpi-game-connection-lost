@@ -5,6 +5,7 @@ import piedra.*
 import graficos.*
 import arena.*
 import frutas.*
+import direcciones.*
 
 object main {
 	const altura = 20
@@ -47,10 +48,10 @@ object main {
 	self.agregarPooka()
 	self.aparecerFruta()
 	//Inputs
-	keyboard.left().onPressDo({personaje.cambiarDireccion("left")})
-	keyboard.right().onPressDo({personaje.cambiarDireccion("right")})
-	keyboard.up().onPressDo({personaje.cambiarDireccion("up")})
-	keyboard.down().onPressDo({personaje.cambiarDireccion("down")})
+	keyboard.left().onPressDo({left.moverse(personaje,1)})
+	keyboard.right().onPressDo({right.moverse(personaje,1)})
+	keyboard.up().onPressDo({up.moverse(personaje,1)})
+	keyboard.down().onPressDo({down.moverse(personaje,1)})
 	keyboard.z().onPressDo({personaje.disparar()})
 	keyboard.x().onPressDo({personaje.ponerArena()})
 		

@@ -17,6 +17,7 @@ object vida {
 	}
 	method tocarEnemigo(enemigo){}
 	method tocarTiro(){}
+	method retroceder(){}
 	
 }
 object gameOver{

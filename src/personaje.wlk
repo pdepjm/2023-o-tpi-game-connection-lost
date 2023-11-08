@@ -2,17 +2,19 @@ import wollok.game.*
 import enemigos.*
 import arena.*
 import main.*
+import direcciones.*
 
 object personaje {
 	//Propiedades
 	var property position = game.center()
-	var property direccion = "right"
+	var property direccion = right
 	var property identificador = 0
 	var vida = 3
 	var puntuacion = 0
-	method image() = "personaje"+direccion+".png"
+	method image() = "personaje"+direccion.nombre()+".png"
 	method vida() = vida
 	method puntuacion() = puntuacion
+	method velocidad() = 1
 	
 	//Metodos
 	
@@ -24,23 +26,8 @@ object personaje {
 	}
 	method cambiarDireccion(direccionNueva){
 		direccion = direccionNueva
-		if (direccion == "up") {
-			position = position.up(1)
-		}
-		if (direccion == "down") {
-			position = position.down(1)
-		}
-		if (direccion == "left") {
-			position = position.left(1)
-		}
-		if (direccion == "right") {
-			position = position.right(1)
-		}
-		
-		if (main.dentroDePantalla(self.position())) {
-			self.retroceder()
-		}
 	}
+	
 	method disparar(){
 			const tiro = new Proyectil()
 			identificador+=1
@@ -66,19 +53,7 @@ object personaje {
 		if (vida <= 0) main.terminarJuego()
 	}
 	method retroceder() {
-		if (direccion == "up") {
-			position = position.down(1)
-			direccion = "up"
-		}
-		if (direccion == "down") {
-			position = position.up(1)
-		}
-		if (direccion == "left") {
-			position = position.right(1)
-		}
-		if (direccion == "right") {
-			position = position.left(1)
-		}
+		direccion.moverse(self,-1)	
 	}
 	
 	
@@ -95,7 +70,13 @@ class Proyectil {
 	//Propiedades
 	var property position = personaje.position()
 	
-	const direccion = personaje.direccion()
+	var direccion = personaje.direccion()
+	method cambiarPosition(nueva){
+		position = nueva
+	}
+	method cambiarDireccion(direccionNueva){
+		direccion = direccionNueva
+	}
 	method image() = "bala.png"
 	
 	//Metodos
@@ -109,18 +90,7 @@ class Proyectil {
 		if(main.dentroDePantalla(self.position())){
 			self.eliminarTiro()
 		}
-		if(direccion == "right") {
-		position = position.right(1)
-		}
-		if(direccion == "down") {
-		position = position.down(1)
-		}
-		if(direccion == "up") {
-		position = position.up(1)
-		}
-		if(direccion == "left") {
-		position = position.left(1)
-		}
+		direccion.moverse(self,1)
 		
 	}
 	
