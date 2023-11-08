@@ -12,6 +12,7 @@ object main {
 	const dragon1 = new Dragon(vida = 3)
 	var cantidadEnemigos = 4
 	
+	
 	method dentroDePantalla(position) {
 		return (position.x() < 0 || position.x() > anchura || position.y() < 0|| position.y() > altura )
 	}
@@ -37,7 +38,6 @@ object main {
 	
 	5.times({x =>new Piedra().aparecer()})
 	
-	const fruta = new Fruta()
 		
 	//Spawnear Objetos
 	game.addVisual(personaje)
@@ -45,12 +45,7 @@ object main {
 
 	vida.aparecer()
 	self.agregarPooka()
-	
-	game.onTick(2000, "aparecer fruta", {
-		fruta.aparecer();
-		game.removeTickEvent("aparecer fruta");
-	})
-	
+	self.aparecerFruta()
 	//Inputs
 	keyboard.left().onPressDo({personaje.cambiarDireccion("left")})
 	keyboard.right().onPressDo({personaje.cambiarDireccion("right")})
@@ -66,6 +61,14 @@ object main {
 	game.schedule(30000, {=>self.terminarJuego()})
 	
 	}
+	method aparecerFruta(){
+		
+		game.onTick(5000, "agregarFruta",
+			{const coleccionFrutas = [new Banana(), new Manzana(), new Cebolla()]
+			const fruta = coleccionFrutas.anyOne()
+			fruta.aparecer()})
+	}
+	
 	method agregarPooka() {
 		game.onTick(2000,"agregar pooka",{
 			if (cantidadEnemigos < 10) {
