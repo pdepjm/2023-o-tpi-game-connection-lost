@@ -44,6 +44,7 @@ class Fuego{
 		game.removeVisual(self)		
 	}
 	method tocarEnemigo(enemigo){}
+	method tocarTiro(){}
 }
 
 class Enemigo{
