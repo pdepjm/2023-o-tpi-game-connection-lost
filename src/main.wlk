@@ -37,9 +37,9 @@ object main {
 
 	3.times({x => new Pooka().aparecer()})
 	
-	5.times({x =>new Piedra().aparecer()})
+	5.times({x => new Piedra().aparecer()})
 	
-		
+	//20.times({x => new Arena().aparecer() })
 	//Spawnear Objetos
 	game.addVisual(personaje)
 	game.schedule(0.randomUpTo(20000),{dragon1.aparecer()})

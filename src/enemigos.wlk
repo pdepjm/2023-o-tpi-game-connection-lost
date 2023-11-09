@@ -45,7 +45,10 @@ class Enemigo{
 	var position = game.at(0.randomUpTo(40), 0.randomUpTo(19))
 	var direccion = right
 	var vida = 1
-	method vida() = vida
+	method vida(){
+		if (vida > 0) return vida
+		else return 0
+	} 
 	method direccion() = direccion
 	method position() = position
 	method cambiarPosition(nuevaPos){
