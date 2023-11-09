@@ -11,8 +11,8 @@ object sonidos {
 	}
 	
 	method pararMusica() {
-		//musicaFondo.stop()
-		musicaFondo.volume(0)
+		musicaFondo.stop()
+		//musicaFondo.volume(0)
 	}
 	
 	method gameOver() {

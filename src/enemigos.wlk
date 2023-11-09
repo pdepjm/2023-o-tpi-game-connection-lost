@@ -37,12 +37,13 @@ class Fuego{
 	}
 	method tocarEnemigo(enemigo){}
 	method tocarTiro(){}
+	method tocarPersonaje(){}
 }
 
 class Enemigo{
 	
 	//Propiedades
-	var position = game.at(0.randomUpTo(40), 0.randomUpTo(19))
+	var position = game.at(0.randomUpTo(40), 0.randomUpTo(15))
 	var direccion = right
 	var vida = 1
 	method vida(){

@@ -22,7 +22,9 @@ object personaje {
 		puntuacion += puntos
 	}
 	method cambiarPosition(nueva){
-		position = nueva
+		if(!main.dentroDePantalla(nueva)){
+			position = nueva
+		}
 	}
 	method cambiarDireccion(direccionNueva){
 		direccion = direccionNueva
@@ -35,7 +37,7 @@ object personaje {
         	game.onTick(10,"moverTiro"+self.identificador().toString(), {tiro.mover()})
         	tiro.cambiarIdentificador(identificador)     	
         	game.whenCollideDo(tiro, { elemento =>
-				if (elemento!= self){
+				if (elemento != self && game.hasVisual(tiro)){
 					elemento.tocarTiro()
 					tiro.eliminarTiro()	
 				}		

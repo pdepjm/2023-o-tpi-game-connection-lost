@@ -1,10 +1,12 @@
 import wollok.game.*
 import personaje.*
 import main.*
+import direcciones.*
 
 class Fruta{
 	//Propiedades
-	var property position = game.at(0.randomUpTo(40), 0.randomUpTo(19));
+	const direccion = right
+	var property position = game.at(0.randomUpTo(40), 0.randomUpTo(15));
 	
 	//Metodos
 	method image() = "cebolla.jpg"
@@ -16,6 +18,10 @@ class Fruta{
 		if(game.hasVisual(self)){
 			game.removeVisual(self);
 		}
+	}
+	
+	method retroceder(){
+		direccion.moverse(self,-1)	
 	}
 	
 	//Colisiones

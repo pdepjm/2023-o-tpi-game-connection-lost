@@ -16,7 +16,12 @@ object main {
 	var cantidadEnemigos = 4
 	
 	method dentroDePantalla(position) {
-		return (position.x() < 0 || position.x() > anchura || position.y() < 0|| position.y() > altura )
+		return (
+			position.x() < 0 ||
+			position.x() > anchura - 1 ||
+			position.y() < 0 ||
+			position.y() > 16
+		)
 	}
 	
 	method cambiarCantidadEnemigos(numero) {
@@ -39,7 +44,7 @@ object main {
 	
 	5.times({x => new Piedra().aparecer()})
 	
-	//20.times({x => new Arena().aparecer() })
+	//30.times({x => new Arena().aparecer() })
 	//Spawnear Objetos
 	game.addVisual(personaje)
 	game.schedule(0.randomUpTo(20000),{dragon1.aparecer()})
