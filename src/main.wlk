@@ -6,6 +6,8 @@ import graficos.*
 import arena.*
 import frutas.*
 import direcciones.*
+import musica.*
+
 
 object main {
 	const altura = 20
@@ -34,7 +36,6 @@ object main {
 	
 	//Declarar Objetos
 
-
 	3.times({x => new Pooka().aparecer()})
 	
 	5.times({x =>new Piedra().aparecer()})
@@ -54,6 +55,9 @@ object main {
 	keyboard.down().onPressDo({down.moverse(personaje,1)})
 	keyboard.z().onPressDo({personaje.disparar()})
 	keyboard.x().onPressDo({personaje.ponerArena()})
+	
+	//Musica
+	game.schedule(10, {sonidos.musica()})
 		
 	//Colision Protagonista
 	game.onCollideDo(personaje, {objeto => objeto.tocarPersonaje(personaje)})
@@ -85,6 +89,8 @@ object main {
 		game.addVisual(gameOver)
 		game.addVisual(score)
 		game.addVisual(puntaje)
+		sonidos.pararMusica()
+		sonidos.gameOver()
 	}
 	
 }
