@@ -12,9 +12,8 @@ import musica.*
 object main {
 	const altura = 20
 	const anchura = 40
-	const dragon1 = new Dragon(vida = 3)
+	const dragon1 = new Dragon(vida = 5)
 	var cantidadEnemigos = 4
-	
 	
 	method dentroDePantalla(position) {
 		return (position.x() < 0 || position.x() > anchura || position.y() < 0|| position.y() > altura )

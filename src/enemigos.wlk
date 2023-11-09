@@ -2,6 +2,7 @@ import wollok.game.*
 import personaje.*
 import main.*
 import direcciones.*
+import graficos.*
 
 class Fuego{
 	var property position = null
@@ -41,9 +42,10 @@ class Fuego{
 class Enemigo{
 	
 	//Propiedades
-	var position = game.at(0.randomUpTo(40), 0.randomUpTo(20))
+	var position = game.at(0.randomUpTo(40), 0.randomUpTo(19))
 	var direccion = right
 	var vida = 1
+	method vida() = vida
 	method direccion() = direccion
 	method position() = position
 	method cambiarPosition(nuevaPos){
@@ -128,7 +130,7 @@ class Dragon inherits Enemigo{
 	}
 	
 	override method image() = "enemigo2"+direccion.nombre()+".png"
-	
+
 	method disparar(){
       if(game.hasVisual(self)){
 			const bala = new Fuego(position = position, direccion = direccion)
@@ -146,6 +148,7 @@ class Dragon inherits Enemigo{
 	
 	override method aparecer(){
 		super()
+		game.addVisual(vidaDragon) 
 		game.onTick(3000, "DisparoDragon",{self.disparar()})
 	}		
 }

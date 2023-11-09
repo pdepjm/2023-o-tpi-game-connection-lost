@@ -6,7 +6,7 @@ object sonidos {
 	const sfx = game.sound("Game Over.mp3")
 		
 	method musica() {
-		musicaFondo.shouldLoop(false)
+		musicaFondo.shouldLoop(true)
 		musicaFondo.play()
 	}
 	

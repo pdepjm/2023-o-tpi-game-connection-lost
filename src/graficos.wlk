@@ -2,15 +2,12 @@ import wollok.game.*
 import personaje.*
 import enemigos.*
 import piedra.*
-
+import main.*
 object vida {
 	method position() = game.at(37,19)
 	
-	method image(){
-		return if(personaje.vida()==3) "3corazones.PNG"
-			   else if(personaje.vida()==2)"2corazones.PNG"
-			   else if(personaje.vida()==1)"1corazon.PNG"
-	}
+	method image() = "corazon"+personaje.vida().toString()+".PNG" 
+		
 	
 	method aparecer(){
 		game.addVisual(self)
@@ -18,7 +15,13 @@ object vida {
 	method tocarEnemigo(enemigo){}
 	method tocarTiro(){}
 	method retroceder(){}
-	
+}
+object vidaDragon{
+	method position() = game.at(2,19)
+	method image() = "corazonVerde" + main.dragon1().vida().toString() + ".PNG"
+	method tocarEnemigo(enemigo){}
+	method tocarTiro(){}
+	method retroceder(){}
 }
 object gameOver{
 	method position() = game.at(4,4)

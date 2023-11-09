@@ -4,7 +4,7 @@ import main.*
 
 class Fruta{
 	//Propiedades
-	var property position = game.at(0.randomUpTo(40), 0.randomUpTo(20));
+	var property position = game.at(0.randomUpTo(40), 0.randomUpTo(19));
 	
 	//Metodos
 	method image() = "cebolla.jpg"

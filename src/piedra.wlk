@@ -5,7 +5,7 @@ import main.*
 class Piedra{
 	var property velocidad = 1
 	var property quieta = true
-	var property position = game.at(0.randomUpTo(40), 0.randomUpTo(20))
+	var property position = game.at(0.randomUpTo(40), 0.randomUpTo(19))
 	method image() = "piedra.png"
 	
 	method aparecer() {
